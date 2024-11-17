@@ -1,25 +1,27 @@
 
 <template>
   <div class="container">
-    <div class="menu">
-
-    </div>
+  <Menu :taskList="tasksList"/>
     <div class="table-container">
       <column class="table-column"
            v-for="column in columns"
            :key="column.id"
-           :name="column.name">
+           :name="column.name"
+            :taskList="tasksList">
 
       </column>
     </div>
   </div>
+  <AddTask></AddTask>
 </template>
 
 
 <script>
 import Column from "@/components/Column.vue";
+import Menu from "@/components/Menu.vue";
+import AddTask from "@/components/AddTask.vue"
 export default {
-  components: {Column},
+  components: {Menu, Column, AddTask},
   data(){
     return{
       columns: [
@@ -27,9 +29,21 @@ export default {
         {id: 'To Do', name: 'To Do'},
         {id: 'Testing', name: 'Testing'},
         {id: 'Closed', name: 'Closed'},
-      ]
+      ],
+      tasksList: []
     }
-  }
+  },
+  mounted() {
+    const data = localStorage.getItem('tasksList');
+    if (data) {
+      this.tasksList = data;
+    } else {
+      localStorage.setItem('tasksList', JSON.stringify(this.tasksList));
+    }
+  },
+
+
+
 }
 </script>
 
@@ -43,11 +57,6 @@ export default {
     display: flex;
     gap: 10px;
     padding: 10px;
-  }
-  .menu{
-    max-width: 80px;
-    width: 100%;
-    background-color: aquamarine;
   }
   .table-container{
     max-width: var(--table-width);

@@ -19,15 +19,18 @@ export default {
   },
   data() {
     return {
-      tasksList: [
-        {id: 'Finish Model', name: 'Finish Model', column: 'Backlog'},
-        {id: 'Create Endpoint', name: 'Create Endpoint', column: 'Backlog'},
-        {id: 'Fix Bug', name: 'Fix Bug'},
-        {id: 'Change Title', name: 'Change Title', column: 'Backlog'},
-      ]
+
     }
   },
-  props: ['name'],
+  mounted() {
+    const data = localStorage.getItem('tasksList');
+    if (data) {
+      this.tasksList = data;
+    } else {
+      localStorage.setItem('tasksList', JSON.stringify(this.tasksList));
+    }
+  },
+  props: ['name', 'tasksList'],
 }
 
 </script>

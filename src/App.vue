@@ -1,37 +1,30 @@
 <template>
-  <div class="section">
-    <layout/>
-  </div>
+  <TheLayout/>
 </template>
 
-
 <script>
-import Layout from "@/components/Layout.vue";
+import TheLayout from "@/components/TheLayout.vue";
 export default {
   components: {
-    Layout,
+    TheLayout,
   }
 }
 </script>
 
-<style>
-  *{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    list-style: none;
-  }
-  :root{
-    --common-width: 1200px;
-    --table-width: 1050px
-  }
-
+<style lang="scss" scoped>
 </style>
 
-<style scoped>
-  .section{
-    background-color: blueviolet;
-    padding: 10px;
-  }
+<style>
+:root{
+  --light-grey: #f7f8fa;
+  --base-grey: #c6cedb73;
+  --dark-blue: #1e2633;
+}
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+}
 </style>

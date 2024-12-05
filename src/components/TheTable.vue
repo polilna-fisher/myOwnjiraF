@@ -1,46 +1,56 @@
-
 <template>
-  <div class="table_container">
-    <div>
-      <h3 class="table_header">Backlog</h3>
+  <div class="table_container"
+  >
+    <div class="column" v-for="column in columnList" :key="column.id"
+         @dragover="handleOnDragOver"
+         @dragleave="onDragLeave"
+         @drop="onDrop">
+      <h3 class="table_header">{{ column.title }}</h3>
+      <div class="column_content">
+        <TheTask v-for="task in taskList.filter(i => i.columnId === column.id)" :key="task.id"/>
+      </div>
     </div>
-    <div>
-      <h3 class="table_header">In Progress</h3>
-    </div>
-    <div>
-      <h3 class="table_header">In Review</h3>
-    </div>
-    <div>
-      <h3 class="table_header">Done</h3>
-    </div>
-    <div class="main_content">
-      <TheTask/>
-      <TheTask/>
-      <TheTask/>
-      <TheTask/>
-    </div>
-    <div class="main_content">
-      <TheTask/>
-      <TheTask/>
-    </div>
-    <div class="main_content">
-      <TheTask/>
-      <TheTask/>
-      <TheTask/>
-    </div>
-    <div class="main_content">
-      <TheTask/>
-      <TheTask/>
-    </div>
-
   </div>
 
 </template>
 
 <script>
 import TheTask from "@/components/TheTask.vue";
+
 export default {
-  components: {TheTask}
+  data() {
+    return {
+      taskList: [
+          {id: 1, title: 'the first task', tag: 'qwe', columnId: 1},
+        {id: 2, title: 'the first task', tag: 'qwe', columnId: 1},
+        {id: 3, title: 'the first task', tag: 'qwe', columnId: 2},
+        {id: 4, title: 'the first task', tag: 'qwe', columnId: 3},
+        {id: 5, title: 'the first task', tag: 'qwe', columnId: 4},
+        {id: 6, title: 'the first task', tag: 'qwe', columnId: 4}
+      ],
+      columnList: [
+          {id: 1, title: 'Backlog'},
+        {id: 2, title: 'In Progress'},
+        {id: 3, title: 'In Review'},
+        {id: 4, title: 'Done'}
+      ]
+    }
+  },
+  components: {TheTask},
+  name: 'DroppableItem',
+  props: [
+    'onDragOver',
+    'onDragLeave',
+    'onDrop'
+  ],
+  setup(props) {
+    const handleOnDragOver = event => {
+      event.preventDefault()
+      props.onDragOver && props.onDragOver(event)
+    }
+
+    return {handleOnDragOver}
+  }
 }
 </script>
 
@@ -50,22 +60,27 @@ export default {
   padding: 10px;
   text-align: center;
   margin: 0 auto;
-  display: grid;
+  display: flex;
   width: 100%;
-  grid-template-columns: [Backlog] 1fr [In Progress] 1fr [In Review] 1fr [Done] 1fr;
-  grid-template-rows: auto;
   justify-content: space-between;
-  align-items: center;
-  grid-template-areas:
-    "table_header table_header table_header table_header"
-    "main_content main_content main_content main_content"
 }
+
+.column {
+  width: 100%;
+
+}
+
 .table_header {
   grid-area: table_header;
   color: var(--dark-blue);
   margin-bottom: 40px;
 }
-.main_content{
-  margin: 0 auto;
+
+.column_content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+
 </style>

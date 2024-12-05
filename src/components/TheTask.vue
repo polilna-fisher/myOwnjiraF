@@ -1,5 +1,7 @@
 <template>
-  <div class="task_container">
+  <div class="task_container"
+       draggable="true"
+       @dragstart="handleDragStart">
     <h3 class="title">Title</h3>
 
   </div>
@@ -7,7 +9,15 @@
 
 <script>
 export default {
+  name: 'DraggableItem',
+  props: ['transferData'],
+  setup(props)  {
+    const handleDragStart = event => {
+      event.dataTransfer.setData('value', JSON.stringify(props.transferData))
+    }
 
+    return { handleDragStart }
+  }
 }
 </script>
 

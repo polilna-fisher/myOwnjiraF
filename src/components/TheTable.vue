@@ -21,11 +21,10 @@
 </template>
 
 <script>
-import {differenceBy} from 'lodash/fp'
-import {computed, ref} from 'vue'
 import TheTask from "@/components/TheTask.vue";
 
 export default {
+  inject: ['columnList', 'taskList'],
   data() {
     return {
       taskList: [
@@ -36,13 +35,6 @@ export default {
         {id: 5, title: 'the first task', tag: 'qwe', columnId: 4},
         {id: 6, title: 'the first task', tag: 'qwe', columnId: 4}
       ],
-      columnList: [
-        {id: 1, title: 'Backlog'},
-        {id: 2, title: 'In Progress'},
-        {id: 3, title: 'In Review'},
-        {id: 4, title: 'Done'}
-      ],
-
     }
   },
   components: {TheTask},
@@ -52,11 +44,10 @@ export default {
       event.dataTransfer.effectAllowed = 'move'
       event.dataTransfer.setData('taskID', item.id)
     },
-    onDrop(event, list) {
+    onDrop(event, column) {
       const taskID = event.dataTransfer.getData('taskID')
       const task = this.taskList.find((task) => task.id == taskID)
-      console.log(list, 't')
-      task.columnId = list.id
+      task.columnId = column.id
     },
   },
 }

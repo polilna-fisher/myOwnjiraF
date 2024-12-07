@@ -27,14 +27,7 @@ export default {
   inject: ['columnList', 'taskList'],
   data() {
     return {
-      taskList: [
-        {id: 1, title: 'the first task', tag: 'qwe', columnId: 1},
-        {id: 2, title: 'the first task', tag: 'qwe', columnId: 1},
-        {id: 3, title: 'the first task', tag: 'qwe', columnId: 2},
-        {id: 4, title: 'the first task', tag: 'qwe', columnId: 3},
-        {id: 5, title: 'the first task', tag: 'qwe', columnId: 4},
-        {id: 6, title: 'the first task', tag: 'qwe', columnId: 4}
-      ],
+
     }
   },
   components: {TheTask},
@@ -48,7 +41,10 @@ export default {
       const taskID = event.dataTransfer.getData('taskID')
       const task = this.taskList.find((task) => task.id == taskID)
       task.columnId = column.id
+      localStorage.setItem("taskList", JSON.stringify(this.taskList));
+
     },
+
   },
 }
 </script>
@@ -66,6 +62,7 @@ export default {
 
 .column {
   width: 100%;
+  max-width: 240px;
 
 }
 

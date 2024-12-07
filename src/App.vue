@@ -4,7 +4,7 @@
 
 <script>
 import TheLayout from "@/components/TheLayout.vue";
-import {onMounted, provide} from "vue";
+import {onMounted, provide, ref} from "vue";
 
 export default {
   components: {
@@ -17,22 +17,24 @@ export default {
       {id: 3, title: "In Review"},
       {id: 4, title: "Done"},
     ]
-    let taskList = []
+    const taskList = ref([]);
 
     onMounted(() => {
-
-
       const savedTasks = localStorage.getItem("taskList");
-      taskList = savedTasks ? JSON.parse(savedTasks) : [];
+      if (!savedTasks) {
+        localStorage.setItem("taskList", JSON.stringify([]))
+      }else{
+        taskList.value = JSON.parse(savedTasks)
+      }
 
       const savedColumns = localStorage.getItem("columnList");
-      columnList = savedColumns
-          ? JSON.parse(savedColumns)
-          : columnList;
-
       if (!savedColumns) {
-        localStorage.setItem("columnList", JSON.stringify(columnList));
+        localStorage.setItem("columnList", JSON.stringify(columnList))
+      }else{
+        columnList = JSON.parse(savedColumns)
       }
+      console.log(taskList, 'gsvsdfv')
+
     })
     provide("columnList", columnList);
     provide("taskList", taskList);

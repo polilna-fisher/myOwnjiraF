@@ -24,6 +24,8 @@ export default {
     background-color: var(--light-grey);
     width: 100%;
     height: 100%;
+    position: relative;
+
   }
   .container{
     background-color: var(--light-grey);

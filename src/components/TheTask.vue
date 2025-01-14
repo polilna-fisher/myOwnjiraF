@@ -1,6 +1,6 @@
 <template>
   <div class="task_container">
-    <h3 class="title">Title {{task.id}}</h3>
+    <h3 class="title">Title {{task.title}}</h3>
 
   </div>
 </template>
